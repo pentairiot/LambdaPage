@@ -47,6 +47,43 @@ def lambda_handler(event, context):
     page.handle_request(event)
 ```
 
+### Deployment
+Deploying the page to AWS can be done any way you like, we tend to use [serverless](https://serverless.com/) with the [serverless-python-requirements plugin](https://github.com/UnitedIncome/serverless-python-requirements). Here is an example config:
+
+```yaml
+service: HelloWorld
+
+provider:
+  name: aws
+  stage: dev
+  runtime: python3.6
+  region: us-east-1
+
+functions:
+  HelloWorld:
+    handler: HelloWorld.lambda_handler
+    name: HelloWorld
+    description: Serve the HelloWorld endpoint
+    memorySize: 128
+    timeout: 30
+    role: arn:aws:iam::#{AWS::AccountId}:role/mobius/MobiusRole
+    package:
+      exclude:
+        - "**"
+        - "!*.py"
+    events:
+      - http:
+          path: /
+          method: get
+
+```
+
+Deploy by running:
+
+```
+serverless deploy
+```
+
 
 ### Testing
 This framework provides a nice wsgi test bed powered by falcon. Simply set up the LambdaPage and call `start_local()`.
