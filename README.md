@@ -1,6 +1,13 @@
 # LambdaPage
 Framework for serving static pages through AWS Lambda and API Gateway
 
+### Installation
+Install with pip:
+
+```
+pip install LambdaPage
+```
+
 ### Usage
 A page is composed by one or more endpoints. Each endpoint should define a REST method, a path, and a function
 that will handle the request with that method and path. Endpoints can also optionally specify a content-type for
