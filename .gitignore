@@ -1,0 +1,15 @@
+sub__pycache__
+*.pyc
+env
+venv
+build
+dist
+*.egg-info
+*.swp
+*.swo
+.idea
+*.vscode
+*.log
+*.serverless
+node_modules
+package-lock.json
