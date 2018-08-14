@@ -1,0 +1,20 @@
+service: HelloWorld
+
+provider:
+  name: aws
+  stage: dev
+  runtime: python3.6
+  region: us-east-1
+
+functions:
+  HelloWorld:
+    handler: HelloWorld.lambda_handler
+    name: HelloWorld
+    description: Serve the HelloWorld endpoint
+    memorySize: 128
+    timeout: 30
+    role: {function_role_arn}
+    events:
+      - http:
+          path: /
+          method: get
