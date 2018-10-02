@@ -5,7 +5,7 @@ with open('README.md', 'r') as fh:
 
 setup(
     name='LambdaPage',
-    version='0.0.2',
+    version='0.0.3',
     author='PentairIoT',
     author_email='pentairiot@gmail.com',
     description='Python library for creating, testing, and deploying small single-page web applications using AWS Lambda and API-Gateway',
@@ -13,7 +13,7 @@ setup(
     long_description_content_type='text/markdown',
     url='https://github.com/pentairiot/LambdaPage',
     packages=["LambdaPage"],
-    install_requires=["boto3", "falcon"],
+    install_requires=["boto3", "falcon", "pytz"],
     classifiers=(
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
