@@ -23,7 +23,6 @@ class LambdaPage:
         path = event['path']
         if isinstance(event['body'], bytes):
             event['body'] = event['body'].decode()
-        print('handling event: \n%s' % json.dumps(event))
         if path not in self.endpoints or method not in self.endpoints[path]:
             return {"statusCode": 404}
         func = self.endpoints[path][method]
@@ -59,7 +58,7 @@ class LambdaPage:
 
             @staticmethod
             def _req_to_event(req):
-                return {
+                event = {
                     'path': req.path,
                     'resource': req.path,
                     'httpMethod': req.method.lower(),
@@ -67,6 +66,8 @@ class LambdaPage:
                     'queryStringParameters': req.params,
                     'body': req.stream.read()
                 }
+                print('translated Falcon request to event: \n%s' % json.dumps(event, indent=2))
+                return event
 
             @staticmethod
             def _ret_to_resp(ret, resp):
