@@ -41,8 +41,8 @@ class LambdaPage:
         else:
             status_code = 200
             body = resp
-        if not isinstance(body, str):
-            body = json.dumps(body)
+        if not isinstance(body, str) and not isinstance(body, bytes):
+            body = json.dumps(body).encode()
         return {"statusCode": status_code,
                 "headers": {"content-type": func.content_type},
                 "body": body}
@@ -72,7 +72,7 @@ class LambdaPage:
 
             @staticmethod
             def _ret_to_resp(ret, resp):
-                resp.data = ret['body'].encode()
+                resp.data = ret['body']
                 resp.status = getattr(falcon, 'HTTP_%i' % ret['statusCode'])
                 resp.content_type = ret['headers']['content-type']
 
