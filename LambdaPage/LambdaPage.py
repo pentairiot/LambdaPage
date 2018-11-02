@@ -20,7 +20,7 @@ class LambdaPage:
 
     def handle_request(self, event):
         method = event['httpMethod'].lower()
-        path = event['path']
+        path = event['resource']
         if isinstance(event['body'], bytes):
             event['body'] = event['body'].decode()
         if path not in self.endpoints or method not in self.endpoints[path]:
@@ -57,14 +57,15 @@ class LambdaPage:
                 self.request_handler = request_handler
 
             @staticmethod
-            def _req_to_event(req):
+            def _req_to_event(req, **kwargs):
                 event = {
                     'path': req.path,
-                    'resource': req.path,
+                    'resource': req.uri_template,
                     'httpMethod': req.method.lower(),
                     'headers': req.headers,
                     'queryStringParameters': req.params,
-                    'body': req.stream.read()
+                    'body': req.stream.read().decode(),
+                    'pathParameters': kwargs
                 }
                 print('translated Falcon request to event: \n%s' % json.dumps(event, indent=2))
                 return event
@@ -75,23 +76,23 @@ class LambdaPage:
                 resp.status = getattr(falcon, 'HTTP_%i' % ret['statusCode'])
                 resp.content_type = ret['headers']['content-type']
 
-            def on_get(self, req, resp):
-                event = self._req_to_event(req)
+            def on_get(self, req, resp, **kwargs):
+                event = self._req_to_event(req, **kwargs)
                 ret = self.request_handler(event)
                 self._ret_to_resp(ret, resp)
 
-            def on_put(self, req, resp):
-                event = self._req_to_event(req)
+            def on_put(self, req, resp, **kwargs):
+                event = self._req_to_event(req, **kwargs)
                 ret = self.request_handler(event)
                 self._ret_to_resp(ret, resp)
 
-            def on_post(self, req, resp):
-                event = self._req_to_event(req)
+            def on_post(self, req, resp, **kwargs):
+                event = self._req_to_event(req, **kwargs)
                 ret = self.request_handler(event)
                 self._ret_to_resp(ret, resp)
 
-            def on_delete(self, req, resp):
-                event = self._req_to_event(req)
+            def on_delete(self, req, resp, **kwargs):
+                event = self._req_to_event(req, **kwargs)
                 ret = self.request_handler(event)
                 self._ret_to_resp(ret, resp)
 
