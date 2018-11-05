@@ -64,10 +64,10 @@ class LambdaPage:
                     'httpMethod': req.method.lower(),
                     'headers': req.headers,
                     'queryStringParameters': req.params,
-                    'body': req.stream.read().decode(),
+                    'body': req.stream.read(),
                     'pathParameters': kwargs
                 }
-                print('translated Falcon request to event: \n%s' % json.dumps(event, indent=2))
+                print('translated Falcon request to event: \n%s' % json.dumps(event, indent=2, default=str))
                 return event
 
             @staticmethod
