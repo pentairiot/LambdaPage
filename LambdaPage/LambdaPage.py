@@ -21,8 +21,6 @@ class LambdaPage:
     def handle_request(self, event):
         method = event['httpMethod'].lower()
         path = event['resource']
-        if isinstance(event['body'], bytes):
-            event['body'] = event['body'].decode()
         if path not in self.endpoints or method not in self.endpoints[path]:
             return {"statusCode": 404}
         func = self.endpoints[path][method]
@@ -72,7 +70,7 @@ class LambdaPage:
 
             @staticmethod
             def _ret_to_resp(ret, resp):
-                resp.data = ret['body']
+                resp.data = ret['body'].encode() if isinstance(ret['body'], str) else ret['body']
                 resp.status = getattr(falcon, 'HTTP_%i' % ret['statusCode'])
                 resp.content_type = ret['headers']['content-type']
 
