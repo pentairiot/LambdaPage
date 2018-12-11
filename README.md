@@ -24,7 +24,7 @@ Regardless of content-type, the response body should always be in string format.
 
 LambdaPage also allows for caching responses. This should primarily be done for GET requests that require several seconds
 to return. Currently only a `S3LambdaPageCache` is available, this can be added to a LambdaPage by instantiating it with
-a `bucket` and optionally a `max_age` for cached items (defaults to 300 seconds). See the examples in the `examples` directory.
+a `bucket` and optionally a `max_age` for cached items (defaults to 300 seconds).
 
 ### Testing
 This framework provides a nice wsgi test bed powered by falcon. Simply set up the LambdaPage and call `start_local()`.
