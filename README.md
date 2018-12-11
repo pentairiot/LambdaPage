@@ -9,6 +9,8 @@ pip install LambdaPage
 ```
 
 ### Usage
+Simple examples can be found in the (examples directory)[https://github.com/pentairiot/LambdaPage/tree/master/examples].
+
 A page is composed by one or more endpoints. Each endpoint should define a REST method, a path, and a function
 that will handle the request with that method and path. Endpoints can also optionally specify a content-type for
 the response payload, this defaults to `application/json` (static html pages should use `text/html;charset=utf-8`).
