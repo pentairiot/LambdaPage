@@ -10,7 +10,7 @@ pip install LambdaPage
 
 ### Examples
 
-Simple examples with corresponding Serverless configuration files can be found in the [examples directory](https://github.com/pentairiot/LambdaPage/tree/master/examples)
+Simple examples with corresponding [Serverless](https://serverless.com/) configuration files can be found in the [examples directory](https://github.com/pentairiot/LambdaPage/tree/master/examples)
 
 ### Usage
 
