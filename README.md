@@ -8,8 +8,11 @@ Install with pip:
 pip install LambdaPage
 ```
 
+### Examples
+
+Simple examples with corresponding Serverless configuration files can be found in the [examples directory](https://github.com/pentairiot/LambdaPage/tree/master/examples)
+
 ### Usage
-Simple examples can be found in the (examples directory)[https://github.com/pentairiot/LambdaPage/tree/master/examples].
 
 A page is composed by one or more endpoints. Each endpoint should define a REST method, a path, and a function
 that will handle the request with that method and path. Endpoints can also optionally specify a content-type for
