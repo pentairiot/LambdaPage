@@ -27,7 +27,7 @@ to return. Currently only a `S3LambdaPageCache` is available, this can be added 
 a `bucket` and optionally a `max_age` for cached items (defaults to 300 seconds).
 
 ### Testing
-This framework provides a nice wsgi test bed powered by falcon. Simply set up the LambdaPage and call `start_local()`.
+This framework provides a nice wsgi test bed powered by [Falcon](https://falconframework.org/). Simply set up the LambdaPage and call `start_local()`.
 Note this should be done under 'main' so Lambda doesn't try to execute this code:
 
 ```python
