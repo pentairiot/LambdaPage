@@ -94,8 +94,9 @@ class LambdaPage:
                 ret = self.request_handler(event)
                 self._ret_to_resp(ret, resp)
 
+        resource = LambdaPageFalconResource(request_handler=self.handle_request)
         for path in self.endpoints:
-            app.add_route(path, LambdaPageFalconResource(request_handler=self.handle_request))
+                app.add_route(path, resource)
         httpd = simple_server.make_server('127.0.0.1', 9000, app)
         httpd.serve_forever()
 
