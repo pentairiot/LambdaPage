@@ -20,7 +20,9 @@ the response payload, this defaults to `application/json` (static html pages sho
 
 Each endpoint function should accept a single argument and return a tuple with `(status_code:int, response_body:str)`.
 The argument will be a [Lambda-Proxy event](https://serverless.com/framework/docs/providers/aws/events/apigateway/#example-lambda-proxy-event-default)
-Regardless of content-type, the response body should always be in string format.
+Regardless of content-type, the response body should always be in string format. Also note that given paths are matched
+with incoming requests as if they were prefixes, meaning the request will be routed to the first available matching prefix.
+This can be confusing if you have multiple paths with similar prefixes, so be sure to always add the more specific paths first.
 
 LambdaPage also allows for caching responses. This should primarily be done for GET requests that require several seconds
 to return. Currently only a `S3LambdaPageCache` is available, this can be added to a LambdaPage by instantiating it with
