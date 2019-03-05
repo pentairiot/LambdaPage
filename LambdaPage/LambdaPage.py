@@ -39,8 +39,10 @@ class LambdaPage:
         else:
             status_code = 200
             body = resp
-        if not isinstance(body, str) and not isinstance(body, bytes):
-            body = json.dumps(body).encode()
+        if not isinstance(body, str):
+            body = json.dumps(body)
+        if not func.content_type == 'application/json':
+            body = body.encode()
         return {"statusCode": status_code,
                 "headers": {"content-type": func.content_type},
                 "body": body}
