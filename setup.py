@@ -5,7 +5,7 @@ with open('README.md', 'r') as fh:
 
 setup(
     name='LambdaPage',
-    version='0.0.7',
+    version='0.0.8',
     author='PentairIoT',
     author_email='pentairiot@gmail.com',
     description='Python library for creating, testing, and deploying small single-page web applications using AWS Lambda and API-Gateway',
