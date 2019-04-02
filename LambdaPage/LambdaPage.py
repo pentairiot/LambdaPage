@@ -41,7 +41,7 @@ class LambdaPage:
             body = resp
         if not isinstance(body, str):
             body = json.dumps(body)
-        if func.content_type not in ['application/json', 'text/html']:
+        if func.content_type.split(';')[0] not in ['application/json', 'text/html']:
             body = body.encode()
         return {"statusCode": status_code,
                 "headers": {"content-type": func.content_type},
