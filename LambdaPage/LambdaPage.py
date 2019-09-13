@@ -1,4 +1,3 @@
-import boto3
 import pytz
 import json
 import hashlib
@@ -47,7 +46,7 @@ class LambdaPage:
                 "headers": {"content-type": func.content_type},
                 "body": body}
 
-    def start_local(self):
+    def start_local(self, port=9000):
         import falcon
         from wsgiref import simple_server
         app = falcon.API()
@@ -64,7 +63,7 @@ class LambdaPage:
                     'httpMethod': req.method.lower(),
                     'headers': req.headers,
                     'queryStringParameters': req.params,
-                    'body': req.stream.read().decode(),
+                    'body': req.bounded_stream.read().decode(),
                     'pathParameters': kwargs
                 }
                 print('translated Falcon request to event: \n%s' % json.dumps(event, indent=2, default=str))
@@ -99,8 +98,8 @@ class LambdaPage:
         resource = LambdaPageFalconResource(request_handler=self.handle_request)
         for path in self.endpoints:
                 app.add_route(path, resource)
-        httpd = simple_server.make_server('127.0.0.1', 9000, app)
-        httpd.serve_forever()
+        self.httpd = simple_server.make_server('127.0.0.1', port, app)
+        self.httpd.serve_forever()
 
 
 class LambdaPageCache:
@@ -132,6 +131,7 @@ class LambdaPageCache:
 class S3LambdaPageCache(LambdaPageCache):
     def __init__(self, bucket, prefix='', max_age=300):
         super().__init__(max_age)
+        import boto3
         self.bucket = boto3.resource('s3').Bucket(bucket)
         self.prefix = prefix
 
