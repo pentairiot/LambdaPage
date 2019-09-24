@@ -8,6 +8,7 @@ from io import BytesIO
 class LambdaPage:
     def __init__(self, cache=None):
         self.endpoints = {}
+        self.context = {}
         self.cache = cache
 
     def add_endpoint(self, method, path, func, content_type='application/json', enable_caching=False):
@@ -20,6 +21,7 @@ class LambdaPage:
     def handle_request(self, event):
         method = event['httpMethod'].lower()
         path = event['resource']
+        event['context'] = self.context
         if path not in self.endpoints or method not in self.endpoints[path]:
             return {"statusCode": 404}
         func = self.endpoints[path][method]
